@@ -1,0 +1,11 @@
+AKSES SEBAGAI ADMIN : URL = http://localhost/Terapi_anak/login
+username : admin
+password : admin
+
+AKSES SEBAGAI ANAK : URL = http://localhost/Terapi_anak/login_anak
+username : AJI
+password : AJI
+
+AKSES SEBAGAI ORTU : URL = http://localhost/Terapi_anak/login
+username : YULI
+password : YULI
