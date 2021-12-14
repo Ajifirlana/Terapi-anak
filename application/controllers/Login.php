@@ -41,7 +41,7 @@ class Login extends CI_Controller {
           'authenticated'=>true,
           'username'=>$user->nama_user,
           'id_user'=>$user->id_user,
-
+            'id'=>$user->id,
           'hak_akses'=>$user->hak_akses
         );
 
@@ -63,6 +63,15 @@ class Login extends CI_Controller {
                         <strong>Selamat Datang</strong>
                      </div>');
         redirect('dashboard/orangtua');
+        }elseif($user->hak_akses == 'guru'){
+          //$this->session->set_userdata($session); 
+          $this->session->set_flashdata('msg',
+                     '
+                     <div class="alert alert-success alert-dismissible" role="alert">
+                      
+                        <strong>SEDANG MAINTENANCE</strong>
+                     </div>');
+        redirect('login');
         }
       }else{
        

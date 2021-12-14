@@ -68,7 +68,7 @@
           <thead>
           <tr>
             <th>Nama Orang Tua</th>
-            <th>ID Anak</th>
+
             <th>Nama Anak</th>
             <th>Hak Akses</th>
             
@@ -83,8 +83,6 @@
            ?>
           <tr>
              <td><?php echo $row->nama_user; ?></td>
-
-             <td><?php echo $row->id_user; ?></td>
 
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->hak_akses; ?></td>
@@ -204,7 +202,7 @@
   <div id="modal-tambah" class="modal fade">
     <div class="modal-dialog">
  
-<form action="<?php echo base_url('index.php/dashboard/post_pengguna')?>" method="post">
+<form action="<?php echo base_url('dashboard/post_pengguna')?>" method="post">
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -220,36 +218,15 @@
             <label>Password</label>
             <input type="text" name="password" autocomplete="off" required="" class="form-control" cols="30" rows="3">
               </div>
-  <div class="form-group">
-            <label>Nama Anak</label>
-     
-            <select name="id_user" class="form-control" selected="">
-
-               <option value="<?php echo $row->id_anak;?>"><?php echo $row->nama_lengkap;?></option>
 
 
-            <?php 
-          foreach ($data_anak->result() as $anak) {
-           ?>
-              <option value="<?php echo $anak->id_anak;?>"><?php echo $anak->nama_lengkap;?></option>
+ 
+         
+            <div class="form-group">
 
-
-        <?php } ?>
-            </select>
-          
+        
+          <input type="hidden" name="hak_akses" value="orang_tua" autocomplete="off" required="" class="form-control" cols="30" rows="3">
           </div>
-         <div class="form-group">
-            <label>Hak Akses</label>
-     
-            <select name="hak_akses" class="form-control">
-            
-              <option value="admin">admin</option>
-  <option value="orang_tua">orang_tua</option>
-  <option value="terapis">terapis</option>
-            </select>
-          
-          </div>
-           
            
         </div>
           <div class="modal-footer">

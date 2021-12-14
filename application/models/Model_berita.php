@@ -105,47 +105,6 @@ var $gallery_path_url;
 	}
 
 
-	function data($limit, $start){
-		return $query = $this->db->get('berita', $limit, $start);
-		return $query;		
-	}
-
-	public function all(){
- $query = $this->db->query("SELECT * FROM kegiatan ORDER BY id_berita DESC LIMIT 5 ");
-		return $query;
-	}
-
-	public function internasional1(){
- $query = $this->db->get('berita');
- $query = $this->db->query("SELECT * FROM berita WHERE kategori = 'internasional' ORDER BY id_berita DESC LIMIT 1 ");
- return $query->result();
-    
-	}
-
-public function teknologi1(){
- $query = $this->db->get('berita');
- $query = $this->db->query("SELECT * FROM berita WHERE kategori = 'teknologi' ORDER BY id_berita DESC LIMIT 1 ");
- return $query->result();
-    
-	}
-	public function nasional1(){
- $query = $this->db->get('berita');
- $query = $this->db->query("SELECT * FROM berita WHERE kategori = 'nasional' ORDER BY id_berita DESC LIMIT 1 ");
- return $query->result();
-
-
-    
-	}
-
-	public function beritaterbaruinter(){
-
- $query = $this->db->query("SELECT * FROM berita  ORDER BY id_berita DESC LIMIT 5 ");
- return $query->result();
-
-
-    
-	}
-
 
 
 
@@ -170,6 +129,25 @@ $query = $this->db->query("SELECT pk.id,pk.id_user,pk.password,pk.nama_user,pk.h
 
 	}
 
+	function jadwal_guru(){
+		$query = $this->db->query("SELECT * FROM jw_terapis GROUP BY ruang");
+ return $query;
+
+	}
+
+	function jadwal_ajar(){
+
+		$query = $this->db->query("SELECT * FROM jw_terapis JOIN t_admin WHERE ruang=id AND hak_akses='guru'");
+ return $query;
+
+	}
+
+	function data_guru(){
+		$query = $this->db->query("SELECT * FROM t_admin JOIN t_terapis WHERE t_admin.nama_user=t_terapis.nama_lengkap AND hak_akses='guru'");
+ return $query;
+
+	}
+
 public function data_anak(){ 
 $query = $this->db->query("SELECT * FROM t_ankterapi ORDER BY id_anak DESC");
  return $query;
@@ -187,12 +165,8 @@ public function jadwal_anak(){
 
 
 public function admin_sm_berita(){
-	if ($this->session->userdata('level') == 'Admin') {
 	
-   		return $query = $this->db->query("SELECT * FROM kegiatan");
-	}else
-	
-    return $query = $this->db->query("SELECT * FROM t_terapis");
+    return $query = $this->db->query("SELECT * FROM tabel_izin JOIN t_ankterapi WHERE tabel_izin.id_anak=t_ankterapi.id_anak ORDER BY id_izn DESC");
     
 	}
 
@@ -208,7 +182,7 @@ public function jadwal_pengganti(){
 public function jadwal_saya(){ 
 
 	$sesi_anak = $this->session->userdata('id_anak');
- $query = $this->db->query("SELECT * FROM jw_terapis AS jt WHERE jt.id_anak =$sesi_anak ORDER BY id_jadwal DESC");
+ $query = $this->db->query("SELECT * FROM jw_terapis AS jt JOIN t_admin AS ta WHERE jt.id_anak =$sesi_anak AND jt.id_guru=ta.id ORDER BY id_jadwal DESC");
  return $query ;
 
 }
@@ -222,42 +196,42 @@ public function jadwal_izin_saya(){
 }
 
 public function jadwal_terapis_senin(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='senin'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.ruang,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='senin'");
     
 	}
 
 
 
 public function jadwal_terapis_selasa(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi,t1.hari FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='selasa'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.ruang,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi,t1.hari FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='selasa'");
     
 	}
 
 
 public function jadwal_terapis_rabu(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='rabu'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.ruang,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='rabu'");
     
 	}
 
 public function jadwal_terapis_kamis(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='kamis'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.ruang,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='kamis'");
     
 	}
 
 public function jadwal_terapis_jumat(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='jumat'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.ruang,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='jumat'");
     
 	}
 
 	
 public function jadwal_terapis_sabtu(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='sabtu'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.ruang,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='sabtu'");
     
 	}
 
 
 public function jadwal_terapis_minggu(){
-    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='minggu'");
+    return $query = $this->db->query("SELECT t1.id_jadwal,t1.hari,t1.ruang,t1.jam_mulai,t1.jam_selesai,t2.nama_lengkap,t2.id_anak,t1.jenis_terapi FROM jw_terapis AS t1 JOIN t_ankterapi AS t2 WHERE t1.id_anak=t2.id_anak AND hari='minggu'");
     
 	}
 public function admin_sm_anak(){

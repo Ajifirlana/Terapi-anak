@@ -77,9 +77,9 @@
     <!-- Main content -->
     <section class="content">
     <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-8">
     <a data-toggle="modal" data-target="#modal-tambah">
-      <button class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Jadwal</button><br><br>
+      <button class="btn btn-primary"><i class="fa fa-plus"></i>Tambah Jadwal</button><br><br>
     </a>
 
 
@@ -106,8 +106,10 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+
+            <th>Ruang Terapis</th>
             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
@@ -124,6 +126,8 @@
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+              <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
             <td>
 
@@ -165,8 +169,10 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+
+            <th>Ruang Terapis</th>
             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
@@ -182,6 +188,8 @@
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+             <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
         <td>
 
@@ -220,9 +228,12 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
-            <th>Jenis Terapis</th>
+
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+           
+            <th>Ruang Terapis</th>
+             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
           </tr>
@@ -237,6 +248,8 @@
              <td><?php echo $row->id_jadwal; ?><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+             <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
         <td>
 
@@ -274,8 +287,11 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
+
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+
+            <th>Ruang Terapis</th>
             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
@@ -291,6 +307,8 @@
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+             <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
         <td>
 
@@ -328,8 +346,11 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
+
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+
+            <th>Ruang Terapis</th>
             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
@@ -345,6 +366,8 @@
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+             <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
         <td>
 
@@ -380,8 +403,11 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
+
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+
+            <th>Ruang Terapis</th>
             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
@@ -397,6 +423,8 @@
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+             <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
         <td>
 
@@ -434,8 +462,11 @@
           <thead>
           <tr>
             <th>Nama Lengkap</th>
-            <th>Jam</th>
-            <th>Terapis</th>
+
+            <th>Jam Mulai</th>
+            <th>Jam Selesai</th>
+
+            <th>Ruang Terapis</th>
             <th>Jenis Terapis</th>
             
             <th>Aksi</th>
@@ -451,6 +482,8 @@
              <td><?php echo $row->nama_lengkap; ?></td>
              <td><?php echo $row->jam_mulai; ?></td>
              <td><?php echo $row->jam_selesai; ?></td>
+
+              <td><?php echo $row->ruang; ?></td>
               <td><?php echo $row->jenis_terapi; ?></td>
         <td>
 
@@ -1405,7 +1438,7 @@
   <div id="modal-tambah" class="modal fade">
     <div class="modal-dialog">
  
-<form action="<?php echo base_url('index.php/dashboard/tambah_jadwal')?>" method="post">
+<form action="<?php echo base_url('dashboard/tambah_jadwal')?>" method="post">
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -1429,6 +1462,43 @@
             
             </select>
           
+          </div>
+
+
+          <div class="form-group">
+            <label>Nama Guru</label>
+     
+            <select name="id_guru" class="form-control">
+              <?php 
+
+
+          foreach ($pilih_guru->result() as $row) {
+           ?> 
+              <option value="<?php echo $row->id; ?>"><?php echo $row->nama_user; ?></option>
+
+
+          <?php } ?>
+            
+            </select>
+          
+          </div>
+
+          <div class="form-group">
+            <label>Ruang Terapis</label>
+     
+          <select name="ruang" class="form-control">
+            
+              <option value="Ruang Aba">Ruang Aba</option>
+
+              <option value="Ruang Fisio">Ruang Fisio</option>
+
+              <option value="Ruang Wicara">Ruang Wicara</option>
+
+              <option value="Ruang Okupasi">Ruang Okupasi</option>
+
+              <option value="Ruang Sensor integrasi">Ruang Sensor integrasi</option>
+
+            </select>
           </div>
 
           <div class="form-group">

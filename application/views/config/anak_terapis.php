@@ -76,9 +76,9 @@
             <td><?php echo $row->tempat_lahir; ?></td>
             <td>
               
-              <a data-toggle="modal" data-target="#modal-edit<?=$row->id_anak;?>" button class="btn btn-info btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-pencil-square-o"></i></a>
+              <a data-toggle="modal" data-target="#modal-edit<?=$row->id;?>" button class="btn btn-info btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-pencil-square-o"></i></a>
 
-<a data-toggle="modal" data-target="#modal-hapus<?=$row->id_anak;?>" button class="btn btn-danger btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-trash"></i></a>
+<a data-toggle="modal" data-target="#modal-hapus<?=$row->id;?>" button class="btn btn-danger btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-trash"></i></a>
 
             </td>
           </tr>
@@ -173,7 +173,98 @@
             </select>
           
           </div>
-           
+                       
+<div class="form-group">
+            <label>Agama</label>
+     
+            <select name="agama" class="form-control" selected>
+            
+              <option value="islam">Islam</option>
+  <option value="kristen">Kristen</option>
+ <option value="hindu">Hindu</option>
+
+ <option value="budha">Budha</option>
+
+                          
+
+            </select>
+          
+          </div>
+
+<div class="form-group">
+            <label>Alamat</label>
+            <input type="text" name="alamat" required class="form-control" >
+          </div>
+
+
+<div class="form-group">
+            <label>Umur</label>
+            <input type="number" name="usia" required class="form-control" >
+          </div>
+
+
+<div class="form-group">
+            <label>Pernah Periksa</label>
+            <input type="text" name="pernah_periksa" required class="form-control" >
+          </div>
+
+
+<div class="form-group">
+            <label>Diagnosa Dokter</label>
+            <input type="text" name="diagnosa_dokter" required class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>Diagnosa Yayasan</label>
+            <input type="text" name="diagnosa_yayasan" required class="form-control" >
+          </div>
+            <div class="form-group">
+            <label>Nama Ayah</label>
+            <input type="text" name="nama_ayah" required class="form-control" >
+          </div>
+            <div class="form-group">
+            <label>Nama Ibu</label>
+            <input type="text" name="nama_ibu" required class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>Telp-1</label>
+            <input type="text" name="telp1" required class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>Telp-2</label>
+            <input type="text" name="telp2" required class="form-control" >
+            <input type="hidden" name="hari_terapi" required class="form-control" value="senin">
+          </div>
+
+
+<!-- <div class="form-group">
+            <label>Hari Terapi</label>
+     
+            <select name="hari_terapi" class="form-control" selected>
+            
+              <option value="senin">senin</option>
+  <option value="selasa">selasa</option>
+ <option value="rabu">rabu</option>
+
+ <option value="kamis">kamis</option>
+ <option value="jumat">jumat</option>
+
+ <option value="sabtu">sabtu</option>
+ <option value="minggu">minggu</option>
+
+                          
+
+            </select>
+          
+          </div> -->
+
+           <div class="form-group">
+            <label>Jenis Terapi</label>
+            <input type="text" name="jenis_terapi" required class="form-control" >
+          </div>
+           <div class="form-group">
+            <label>Password</label>
+            <input type="text" name="password" required class="form-control" >
+          </div>
         </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -193,10 +284,10 @@
            ?>
 
   <div class="row">
-  <div id="modal-hapus<?=$row->id_anak;?>" class="modal fade">
+  <div id="modal-hapus<?=$row->id;?>" class="modal fade">
     <div class="modal-dialog">
  
-<form action="<?php echo base_url();?>index.php/dashboard/proses_hapus_komentar/<?php echo $row->id_anak; ?>" method="post">
+<form action="<?php echo base_url();?>dashboard/hapus_anak/<?php echo $row->id; ?>" method="post">
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -204,7 +295,7 @@
         </div>
         <div class="modal-body">
  
-          <input type="hidden" readonly value="<?=$row->id_anak;?>" name="id_anak" class="form-control" >
+          <input type="hidden" readonly value="<?=$row->id;?>" name="id" class="form-control" >
  
  <div class="form-group">
             <label>Apakah Anda Yakin Menghapus Data Anak...???</label>
@@ -230,10 +321,10 @@
            ?>
 
   <div class="row">
-  <div id="modal-edit<?=$row->id_anak;?>" class="modal fade">
+  <div id="modal-edit<?=$row->id;?>" class="modal fade">
     <div class="modal-dialog">
  
-<form action="<?php echo base_url('index.php/dashboard/edit_anakterapis')?>" method="post">
+<form action="<?php echo base_url('dashboard/edit_anakterapis')?>" method="post">
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

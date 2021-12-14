@@ -40,8 +40,7 @@ class Login_anak extends CI_Controller {
         $session = array(
           'authenticated'=>true,
           'nama_lengkap'=>$user->nama_lengkap,
-          'id_anak'=>$user->id_anak, 
-          'id_user'=>$user->id_user
+          'id_anak'=>$user->id_anak
         );
 
           $this->session->set_userdata($session); 

@@ -36,8 +36,18 @@
          ?>
 
 <li class="treeview">
+          <a href="<?php echo base_url();?>dashboard/data_guru">
+             <i class="fa fa-files-o"></i> <span>Data Guru</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+    
+        </li>
+
+<li class="treeview">
           <a href="<?php echo base_url();?>dashboard">
-             <i class="fa fa-files-o"></i> <span>Terapis</span>
+             <i class="fa fa-files-o"></i> <span>Data Izin</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

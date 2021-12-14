@@ -28,12 +28,151 @@ $data['jumlahanakizin'] = $this->db->count_all_results('tabel_izin');
 $data['jumlahankterapis'] = $this->db->count_all_results('t_ankterapi');
 $this->load->view('dashboard', $data);
         }
+
+public function data_guru(){
+$data['jadwal_ajar'] =$this->model_berita->jadwal_ajar();
+$data['pilihruang'] = $this->model_berita->jadwal_guru();
+
+$data['pilih_guru'] = $this->model_berita->data_guru();
+$data['sm_berita'] = $this->model_berita->data_guru();
+$this->load->view('data_guru', $data);
+}
+
+public function set_jadwal($id_jadwal=null){
+$ruang = $this->input->post('ruang');
+
+
+$id_jadwal = $this->input->post('id_jadwal');
+$data = array('ruang'=>$ruang,'id_jadwal'=>$id_jadwal);
+
+
+    $this->db->where('id_jadwal', $_POST['id_jadwal']);
+            $this->db->update('jw_terapis',$data);
+             $this->session->set_flashdata('msg',
+             '
+             <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times; &nbsp;</span>
+                </button>
+                <strong>Sukses!</strong> Data Jadwal berhasil diedit.
+             </div>'
+           );
+            redirect('dashboard/data_guru');
+
+}
+
+public function tambah_guru(){
+
+           $nama_user          = htmlentities(strtoupper($_POST['nama_user']));
+             $password =  md5($_POST['password']);
+          $tanggal_lahir= htmlentities(strip_tags($_POST['tanggal_lahir']));
+$jenis_kelamin= htmlentities(strtoupper($_POST['jenis_kelamin']));
+$agama= htmlentities(strtoupper($_POST['agama']));
+
+$no_telp= htmlentities(strtoupper($_POST['no_telp']));
+
+$tempat_lahir= htmlentities(strtoupper($_POST['tempat_lahir']));
+
+              $data = array('nama_user'=>$nama_user,'password'=>$password,'hak_akses'=>'guru');
+              $biodata = array('nama_lengkap'=>$nama_user,'tanggal_lahir'=>$tanggal_lahir,'jenis_kelamin'=>$jenis_kelamin,'agama'=>$agama,'no_telp'=>$no_telp,'tempat_lahir'=>$tempat_lahir);
+
+$data_guru = $this->db->query("SELECT * FROM t_admin WHERE nama_user='$nama_user' OR password='$password'")->row();
+$query = $this->db->query("SELECT * FROM t_terapis WHERE nama_lengkap='$nama_user'")->row();
+if($query > 0){
+    ;$this->session->set_flashdata('msg',
+                       '
+                       <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times; &nbsp;</span>
+                          </button>
+                          <strong>Sukses!</strong>Data sudah di set
+                       </div>'
+                     );
+}else if($data_guru > 0){
+    $this->db->insert('t_terapis', $biodata);
+                    $this->session->set_flashdata('msg',
+                       '
+                       <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times; &nbsp;</span>
+                          </button>
+                          <strong>Sukses!</strong>Guru berhasil ditambahkan.
+                       </div>'
+                     );
+} 
+else{ $this->db->insert('t_terapis', $biodata);
+ $this->db->insert('t_admin', $data);
+                    $this->session->set_flashdata('msg',
+                       '
+                       <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times; &nbsp;</span>
+                          </button>
+                          <strong>Sukses!</strong>Guru berhasil ditambahkan.
+                       </div>'
+                     );
+
+                }
+//exit;
+//$this->db->insert('t_terapis', $biodata);
+
+              
+redirect('dashboard/data_guru');
+}
+
+
+public function edit_guru($id=null){
+
+    $id = $this->input->post('id');
+    $nama_user = $this->input->post('nama_user');
+    
+    $password = md5($this->input->post('password'));
+
+    $data = array('nama_user'=>$nama_user,'password'=>$password);
+    
+    $this->db->where('id', $_POST['id']);
+            $this->db->update('t_admin',$data);
+             $this->session->set_flashdata('msg',
+             '
+             <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times; &nbsp;</span>
+                </button>
+                <strong>Sukses!</strong> Data Guru berhasil diedit.
+             </div>'
+           );
+            redirect('dashboard/data_guru');
+
+}
+public function hapus_guru($id=null){
+$nama_lengkap = strtoupper($this->input->post('nama_lengkap'));
+    $this->db->where('nama_lengkap', $_POST['nama_lengkap']);
+     $this->db->delete('t_terapis');
+        $this->db->where('id', $_POST['id']);
+         
+          $this->db->delete('t_admin');
+          
+$this->session->set_flashdata('msg',
+             '
+             <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times; &nbsp;</span>
+                </button>
+                <strong>Sukses!</strong> Guru berhasil Di Hapus
+             </div>'
+           );
+
+  redirect('dashboard/data_guru');
+
+    }
 public function jadwal_terapis(){
 
 $data['jumlahjadwal'] = $this->db->count_all_results('jw_terapis');
 
 $data['jumlahanakizin'] = $this->db->count_all_results('tabel_izin');
 $data['pilianak'] = $this->model_berita->admin_sm_anak();
+
+$data['pilih_guru'] = $this->model_berita->data_guru();
 $data['sm_user'] = $this->model_berita->jadwal_terapis_senin();
 
 $data['selasa'] = $this->model_berita->jadwal_terapis_selasa();
@@ -52,43 +191,7 @@ $data['minggu'] = $this->model_berita->jadwal_terapis_minggu();
 $this->load->view('config/jadwal_terapis', $data);
 
     }
- function tambah_terapi(){
 
-              $nama_lengkap          = htmlentities(strip_tags($_POST['nama_lengkap']));
-              $tanggal_lahir          = htmlentities(strip_tags($_POST['tanggal_lahir']));
-              $jenis_kelamin            = htmlentities(strip_tags($_POST['jenis_kelamin']));
-             $agama            = htmlentities(strip_tags($_POST['agama']));
-             $no_telp            = htmlentities(strip_tags($_POST['no_telp']));
-             
-
-              
-
-    
-
-                    date_default_timezone_set('Asia/Jakarta');
-                    $tgl = date('Y-m-d');
-
-                    $data = array('nama_lengkap' => $nama_lengkap,
-          'tanggal_lahir' => $tanggal_lahir,
-          'jenis_kelamin' => $jenis_kelamin,
-                    'agama' => $agama,'no_telp'=>$no_telp);
-
-                    
-
-                    $this->db->insert('t_terapis', $data);
-                    $this->session->set_flashdata('msg',
-                       '
-                       <div class="alert alert-success alert-dismissible" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times; &nbsp;</span>
-                          </button>
-                          <strong>Sukses!</strong> Terapis berhasil ditambahkan.
-                       </div>'
-                     );
-              
-redirect('dashboard');
-          
-        }
 
 
         public function tambah_izin(){
@@ -177,6 +280,25 @@ $this->session->set_flashdata('msg',
 
         }
 
+        function hapus_izinisadmin($id_izn=null){
+
+            $this->db->where('id_izn', $_POST['id_izn']);
+            $this->db->delete('tabel_izin');
+          
+$this->session->set_flashdata('msg',
+             '
+             <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times; &nbsp;</span>
+                </button>
+                <strong>Sukses!</strong> Izin berhasil Di Hapus
+             </div>'
+           );
+
+  redirect('dashboard');
+
+        }
+
  function hapus_orang_tua($id=null){
 
             $this->db->where('id', $_POST['id']);
@@ -195,29 +317,24 @@ $this->session->set_flashdata('msg',
   redirect('dashboard/user');
 
         }
+function hapus_anak($id=null){
 
-function proses_hapus_terapi($id=''){
-
-
-if($this->session->userdata('level') == 'User'){ 
-            redirect('login'); 
-
-  }else{
-
-$this->model_berita->delete_data_by_pk('t_terapis', 'id_terapis', $id);
-
+            $this->db->where('id', $_POST['id']);
+            $this->db->delete('t_ankterapi');
+          
 $this->session->set_flashdata('msg',
              '
              <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times; &nbsp;</span>
                 </button>
-                <strong>Sukses!</strong> Kegiatan berhasil dihapus.
+                <strong>Sukses!</strong>Data Orang Tua berhasil Di Hapus
              </div>'
            );
-  redirect('index.php/dashboard');
+
+  redirect('dashboard/anak_terapis');
+
         }
-      }
 
 function proses_hapus_kgiatanuser($id=''){
 
@@ -282,11 +399,12 @@ public function edit_terapis()
 
     public function edit_anakterapis()
     {
+
+           $id_anak  = $this->input->post('id_anak');
           $nama_lengkap          = htmlentities(strip_tags($_POST['nama_lengkap']));
               $nama_panggilan          = htmlentities(strip_tags($_POST['nama_panggilan']));
               $tempat_lahir            = htmlentities(strip_tags($_POST['tempat_lahir']));
             $jenis_kelamin            = htmlentities(strip_tags($_POST['jenis_kelamin']));
-           $id_anak  = htmlentities(strip_tags($_POST['id_anak']));
              $data = array('nama_lengkap' => $nama_lengkap,
           'nama_panggilan' => $nama_panggilan,
           'tempat_lahir' => $tempat_lahir,'jenis_kelamin' => $jenis_kelamin,'id_anak' => $id_anak);
@@ -406,13 +524,15 @@ public function edit_jadwal()
             redirect('dashboard/orangtua');
     }
 function post_pengguna(){
-    $nama_user = $this->input->post('nama_user');
-$id_user = $this->input->post('id_user');
-
+    $rand = rand(10, 20);
+   $id_user = $rand;
+ $nama_user = $this->input->post('nama_user');
+    
   $password = md5($this->input->post('password')); 
   $hak_akses = $this->input->post('hak_akses'); 
 
   $data = array('id_user'=>$id_user,'nama_user'=>$nama_user,'password'=>$password,'hak_akses'=>$hak_akses);
+
 $this->db->insert('t_admin', $data);
                     $this->session->set_flashdata('msg',
                        '
@@ -460,6 +580,9 @@ function tambah_jadwal(){
 
         $id_anak = $this->input->post('id_anak');
         $jam_mulai = $this->input->post('jam_mulai');
+        $id_guru = $this->input->post('id_guru');
+        $ruang = $this->input->post('ruang');
+        
         $jam_selesai = $this->input->post('jam_selesai');
         $hari = $this->input->post('hari');
         $jenis_terapi = $this->input->post('jenis_terapi');
@@ -468,6 +591,9 @@ function tambah_jadwal(){
         $data = array(
 
             'id_anak' => $id_anak,
+
+            'id_guru' => $id_guru,
+            'ruang' => $ruang,
             'jam_mulai' => $jam_mulai,
             'jam_selesai' => $jam_selesai,
             'hari' => $hari,
@@ -490,14 +616,31 @@ function tambah_jadwal(){
 function post_bidang(){
 
         $nama_lengkap = $this->input->post('nama_lengkap');
+        $alamat = $this->input->post('alamat');
+        $usia = $this->input->post('usia');
+        $id_anak = $this->input->post('id_anak');
+        $pernah_periksa =$this->input->post('pernah_periksa');
+        $agama = $this->input->post('agama');
+        $diagnosa_dokter = $this->input->post('diagnosa_dokter');
+        $diagnosa_yayasan = $this->input->post('diagnosa_yayasan');
+        $nama_ayah = $this->input->post('nama_ayah');
+         $nama_ibu = $this->input->post('nama_ibu');
+        $telp1 = $this->input->post('telp1');
+        
+        $telp2 = $this->input->post('telp2');
         
            $nama_panggilan          = htmlentities(strip_tags($_POST['nama_panggilan']));
               $tempat_lahir            = htmlentities(strip_tags($_POST['tempat_lahir']));
             $jenis_kelamin            = htmlentities(strip_tags($_POST['jenis_kelamin']));
-
+  $hari_terapi = $this->input->post('hari_terapi');
+        
+  $jenis_terapi = $this->input->post('jenis_terapi');
+        
+  $password = md5($this->input->post('password'));
+        
              $data = array('nama_lengkap' => $nama_lengkap,
           'nama_panggilan' => $nama_panggilan,
-          'tempat_lahir' => $tempat_lahir,'jenis_kelamin' => $jenis_kelamin);
+          'tempat_lahir' => $tempat_lahir,'jenis_kelamin' => $jenis_kelamin,'agama' => $agama,'id_anak' => $id_anak,'alamat' => $alamat,'usia' => $usia,'pernah_periksa' => $pernah_periksa,'diagnosa_dokter' => $diagnosa_dokter,'diagnosa_yayasan' => $diagnosa_yayasan,'nama_ayah' => $nama_ayah,'nama_ibu' => $nama_ibu,'telp1' => $telp1,'telp2' => $telp2,'hari_terapi' => $hari_terapi,'jenis_terapi' => $jenis_terapi,'password' => $password);
 
         $this->session->set_flashdata('msg',
              '

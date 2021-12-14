@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Okt 2021 pada 17.38
+-- Waktu pembuatan: 11 Des 2021 pada 18.22
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.5
 
@@ -33,25 +33,21 @@ CREATE TABLE `jw_terapis` (
   `jam_mulai` int(20) NOT NULL,
   `jam_selesai` int(15) NOT NULL,
   `hari` text NOT NULL,
+  `ruang` varchar(30) DEFAULT NULL,
   `jenis_terapi` text NOT NULL,
-  `waktu_diubah` text NOT NULL
+  `id_guru` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `jw_terapis`
 --
 
-INSERT INTO `jw_terapis` (`id_jadwal`, `id_anak`, `jam_mulai`, `jam_selesai`, `hari`, `jenis_terapi`, `waktu_diubah`) VALUES
-(4, 1, 7, 8, 'kamis', 'Otak selasa', ''),
-(5, 2, 6, 10, 'senin', 'Terapi Otak', ''),
-(6, 2, 7, 10, 'rabu', 'kesehatan mental', ''),
-(7, 1, 9, 10, 'selasa', 'Terapi Normal', ''),
-(8, 1, 10, 12, 'jumat', 'TERAPI JUMAT', ''),
-(9, 3, 8, 8, 'senin', 'tst', ''),
-(11, 2, 7, 10, 'sabtu', 'testt', ''),
-(12, 1, 4, 3, 'minggu', 'MINGGU', ''),
-(30, 3, 8, 12, 'selasa', 'terapi enak', ''),
-(31, 6, 12, 1, 'senin', 'KESEHATAN', '');
+INSERT INTO `jw_terapis` (`id_jadwal`, `id_anak`, `jam_mulai`, `jam_selesai`, `hari`, `ruang`, `jenis_terapi`, `id_guru`) VALUES
+(35, 13, 6, 7, 'selasa', '31', 'NORMAL', ''),
+(37, 13, 6, 7, 'senin', 'Ruang Aba', 'NORMAL', ''),
+(38, 11, 7, 8, 'senin', 'Ruang Fisio', 'NORMAL', ''),
+(39, 13, 8, 9, 'senin', 'Ruang Okupasi', 'TERAPI ', ''),
+(40, 11, 8, 9, 'selasa', 'Ruang Sensor integra', 'normal', '31');
 
 -- --------------------------------------------------------
 
@@ -67,19 +63,6 @@ CREATE TABLE `tabel_izin` (
   `tanggal_pengajuan` date NOT NULL,
   `status` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tabel_izin`
---
-
-INSERT INTO `tabel_izin` (`id_izn`, `id_anak`, `tanggal_mulai`, `keterangan`, `tanggal_pengajuan`, `status`) VALUES
-(2, 1, NULL, 'xx', '0000-00-00', 'xx'),
-(4, 2, NULL, 'demam', '2021-10-10', 'demam berdarah'),
-(6, 0, NULL, '', '0000-00-00', ''),
-(9, 2, NULL, 'DEMAM MALARIA', '2021-10-29', 'DEMAM MALARIA'),
-(10, 2, NULL, 'SAKIT HATI', '2021-10-16', 'SAKIT HATI'),
-(11, 3, NULL, 'PIKNIK', '2021-10-29', 'PIKNIK'),
-(12, 3, NULL, 'LIBURAN', '2021-10-14', 'LIBURAN');
 
 -- --------------------------------------------------------
 
@@ -122,10 +105,11 @@ CREATE TABLE `t_admin` (
 
 INSERT INTO `t_admin` (`id`, `id_user`, `nama_user`, `password`, `hak_akses`) VALUES
 (1, 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
-(2, 2, 'YULI', '266cae641b25321d46362d71eefd92bd', 'orang_tua'),
-(3, 3, 'YULIANTO', '266cae641b25321d46362d71eefd92bd', 'orang_tua'),
-(6, 6, 'TONI', 'cabd4391948f851812e6597d18f545ab', 'orang_tua'),
-(9, 3, 'python', '23eeeb4347bdd26bfc6b7ee9a3b755dd', 'orang_tua');
+(26, NULL, 'ANGGUN', '5d4451770bf2b41265a9bfb5161b8ecc', 'guru'),
+(30, 13, 'maksunarti', 'f27c901d9c80f1aad67be381e3790cf1', 'orang_tua'),
+(31, NULL, 'guru2', '440a21bd2b3a7c686cf3238883dd34e9', 'guru'),
+(32, 11, 'YULIANA', '4a82f02b2cd6d7971fe1634d3fe0ee74', 'orang_tua'),
+(33, NULL, 'guru3', 'ba6e3bb0215b631f473dd97cd3de08b2', 'guru');
 
 -- --------------------------------------------------------
 
@@ -161,11 +145,8 @@ CREATE TABLE `t_ankterapi` (
 --
 
 INSERT INTO `t_ankterapi` (`id`, `id_anak`, `nama_lengkap`, `nama_panggilan`, `tempat_lahir`, `jenis_kelamin`, `agama`, `alamat`, `usia`, `pernah_periksa`, `diagnosa_dokter`, `diagnosa_yayasan`, `nama_ayah`, `nama_ibu`, `telp1`, `telp2`, `hari_terapi`, `jenis_terapi`, `on_created`, `password`) VALUES
-(1, 1, 'RIZKY', 'BILLAR', 'Muara Bulian', 'laki-laki', NULL, NULL, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 2, 'ANGGUN SAFITRI', 'ANGGUN ', 'Muara', 'perempuan', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 3, 'AJI', 'AJI', 'AJI', 'laki-laki', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'aab14837409986ded0e268be59323c2d'),
-(4, 3, 'anktrapin', 'BILLAR', 'Muara', 'laki-laki', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, 6, 'FIRLI', 'BAHURI', 'JAKARTA', 'laki-laki', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '73acd9a5972130b75066c82595a1fae3');
+(26, 13, 'sunarti', 'sunarti', 'JAMBI', 'perempuan', 'islam', 'JAMBI', 5, '--', '--', '--', '--', '--', '0898', '07878', 'senin', 'BIASA', NULL, '1755383ab7ef5760b29c579d0e9c8677'),
+(27, 11, 'ADE', 'ADE', 'JAMBI', 'laki-laki', 'islam', 'JAMBI', 5, '--', '--', '--', '--', '--', '--', '---', 'senin', '--', NULL, '8418cad2dcc02c5131a160caf4d8a229');
 
 -- --------------------------------------------------------
 
@@ -242,13 +223,13 @@ ALTER TABLE `t_terapis`
 -- AUTO_INCREMENT untuk tabel `jw_terapis`
 --
 ALTER TABLE `jw_terapis`
-  MODIFY `id_jadwal` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_jadwal` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT untuk tabel `tabel_izin`
 --
 ALTER TABLE `tabel_izin`
-  MODIFY `id_izn` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_izn` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `tabel_pengganti`
@@ -260,13 +241,13 @@ ALTER TABLE `tabel_pengganti`
 -- AUTO_INCREMENT untuk tabel `t_admin`
 --
 ALTER TABLE `t_admin`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_ankterapi`
 --
 ALTER TABLE `t_ankterapi`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_terapis`

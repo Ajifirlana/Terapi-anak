@@ -87,14 +87,10 @@
     
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title">Data Terapis</h3>
+        <h3 class="box-title">Data Izin</h3>
 
       <p></p>
 
-
-    <a data-toggle="modal" data-target="#modal-tambah">
-      <button class="btn btn-primary"><i class="fa fa-plus"></i>Tambah Terapi</button><br><br>
-    </a>
  <div class="box-body">
 
       </div>
@@ -111,34 +107,39 @@
         <table id="berita" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
           <tr>
-            <th>Nama Lengkap</th>
 
-            <th>JK</th>
-            <th>Tempat Tanggal Lahir</th>
-            <th>No Telp</th>
+            <th>No</th>
+            <th>Nama Anak</th>
+
+            <th>Tanggal Pengajuan</th>
+
+            <th>Status</th>
+            <th>Keterangan</th>
             <th>Aksi</th>
           </tr>
           </thead>
           <tbody>
           <?php 
-         
+         $no=1;
           foreach ($sm_berita->result() as $row) {
                
            ?>
           <tr>
+
+  <td><?php echo $no++; ?></td>
   <td><?php echo $row->nama_lengkap; ?></td>
 
-            <td><?php echo $row->jenis_kelamin; ?></td>
-           <td><?php echo $row->tempat_lahir; ?>,<?php echo $row->tanggal_lahir; ?></td>
+            <td><?php echo $row->tanggal_pengajuan; ?></td>
+           <td><?php echo $row->keterangan; ?></td>
             
 
-            <td><?php echo '0'.$row->no_telp; ?></td>
+
+            <td><?php echo $row->status; ?></td>
             
             <td>
-              
-                 <a data-toggle="modal" data-target="#modal-edit<?=$row->id_terapis;?>" button class="btn btn-info btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Edit Data"><i class="fa fa-pencil-square-o"></i></a>
+        
 
- <a data-toggle="modal" data-target="#modal-hapus<?=$row->id_terapis;?>" button class="btn btn-danger btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Hapus Data"><i class="fa fa-trash"></i></a>
+ <a data-toggle="modal" data-target="#modal-hapus<?=$row->id_izn;?>" button class="btn btn-danger btn-flat btn-xs" data-popup="tooltip" data-placement="top" title="Hapus Data"><i class="fa fa-trash"></i></a>
 
             </td>
           </tr>
@@ -156,10 +157,10 @@
            ?>
 
   <div class="row">
-  <div id="modal-hapus<?=$row->id_terapis;?>" class="modal fade">
+  <div id="modal-hapus<?=$row->id_izn;?>" class="modal fade">
     <div class="modal-dialog">
  
-<form action="<?php echo base_url()?>dashboard/proses_hapus_terapi/<?php echo $row->id_terapis; ?>" method="post">
+<form action="<?php echo base_url()?>dashboard/hapus_izinisadmin/<?php echo $row->id_izn; ?>" method="post">
       <div class="modal-content">
         <div class="modal-header bg-primary">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -167,10 +168,10 @@
         </div>
         <div class="modal-body">
  
-          <input type="hidden" readonly value="<?=$row->id_terapis;?>" name="id_terapis" class="form-control" >
+          <input type="hidden" readonly value="<?=$row->id_izn;?>" name="id_izn" class="form-control" >
  
  <div class="form-group">
-            <label>Apakah Anda Yakin Menghapus Data Terapis...???</label>
+            <label>Apakah Anda Yakin Menghapus Data Izin...???</label>
             
             <label>"<?=$row->nama_lengkap;?>"</label>
           </div>
@@ -189,88 +190,6 @@
 
 
 
-
-<!--/ Modal Tambah -->
-<div class="row">
-  <div id="modal-tambah" class="modal fade">
-    <div class="modal-dialog">
- 
-<form action="<?php echo base_url('dashboard/tambah_terapi')?>" method="post">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Tambah Data Terapi</h4>
-        </div>
-        <div class="modal-body">
- 
-         
-          <div class="form-group">
-
-            <label>Nama Lengkap</label>
-          <input type="text" name="nama_lengkap" autocomplete="off" required class="form-control" cols="30" rows="3">
-          </div>
-
-          <div class="form-group">
-            <label>Tanggal Lahir</label>
-          <input type="date" name="tanggal_lahir" autocomplete="off" required="" class="form-control" cols="30" rows="3">
-          </div>
-<div class="form-group">
-          
-
-            <label>Jenis Kelamin</label>
-
-
-    
-            <select name="jenis_kelamin" id="kategori" class="form-control" required="">
-              
-              <option value="Laki-laki">Laki-laki</option>
-
-              <option value="Perempuan">Perempuan</option>
-            
-            </select>
-          
-     
-
-          </div>
-
-            <div class="form-group">
-          
-
-            <label>Agama</label>
-
-
-    
-            <select name="agama" id="kategori" class="form-control" required="">
-              
-              <option value="Islam">Islam</option>
-
-              <option value="Kristen">Kristen</option>
-
-              <option value="Hindu">Hindu</option>
-              <option value="Budha">Budha</option>
-              
-            
-            </select>
-          
-     
-
-          </div>
-           <div class="form-group">
-            <label>No Telepon</label>
-          <input type="text" name="no_telp" autocomplete="off" required class="form-control" cols="30" rows="3">
-          </div>
-           
-           
-        </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-warning"><i class="icon-pencil5"></i>Simpan</button>
-          </div>
-        </form>
-
-     </div>
-  </div>
-</div>
 
       </div>
 
@@ -322,91 +241,3 @@
 
 
 </html>
-
-    <!-- Modal Ubah -->
-<?php 
-          foreach ($sm_berita->result() as $row) {
-           ?>
-
-  <div class="row">
-  <div id="modal-edit<?=$row->id_terapis;?>" class="modal fade">
-    <div class="modal-dialog">
- 
-<form action="<?php echo base_url('dashboard/edit_terapis')?>" method="post">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Data Kegiatan</h4>
-        </div>
-        <div class="modal-body">
- 
-          <input type="hidden" readonly value="<?=$row->id_terapis;?>" name="id_terapis" class="form-control" >
- <div class="form-group">
-            <label>Nama Lengkap</label>
-            <input type="text" name="nama_lengkap" class="form-control" value="<?=$row->nama_lengkap;?>">
-
-          </div>
-          <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <input type="date" name="tanggal_lahir" class="form-control" value="<?=$row->tanggal_lahir;?>">
-
-          </div>
- <div class="form-group">
-          
-
-            <label>Jenis Kelamin</label>
-
-
-    
-            <select name="jenis_kelamin" id="kategori" class="form-control" required="">
-              
-              <option value="Laki-laki">Laki-laki</option>
-
-              <option value="Perempuan">Perempuan</option>
-            
-            </select>
-          
-     
-
-          </div>
-           <div class="form-group">
-          
-
-            <label>Agama</label>
-
-
-    
-            <select name="agama" id="kategori" class="form-control" required="">
-              
-              <option value="Islam">Islam</option>
-
-              <option value="Kristen">Kristen</option>
-
-              <option value="Hindu">Hindu</option>
-              <option value="Budha">Budha</option>
-              
-            
-            </select>
-          
-     
-
-          </div>
-        <div class="form-group">
-            <label>No Telepon</label>
-            <input type="text" class="form-control" name="no_telp" value="<?php echo $row->no_telp; ?>">
-          </div>
-
-        </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-warning"><i class="icon-pencil5"></i> Edit</button>
-          </div>
-        </form>
-
-     </div>
-  </div>
-</div>
-        <?php } ?>
-
-
-<!-- END Modal Ubah -->

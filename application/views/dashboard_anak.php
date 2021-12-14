@@ -54,11 +54,15 @@
         <table id="berita" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
           <tr>
+
+            <th>Nama Guru</th>
             <th>Jam Mulai</th>
 
             <th>Jam Selesai</th>
             <th>Hari</th>
             <th>Jenis Terapi</th>
+
+            <th>Ruang Terapi</th>
           </tr>
           </thead>
           <tbody>
@@ -68,6 +72,8 @@
                
            ?>
           <tr>
+
+            <td><?php echo $row->nama_user; ?></td>
   <td><?php echo $row->jam_mulai; ?></td>
 
             <td><?php echo $row->jam_selesai; ?></td>
@@ -75,6 +81,8 @@
             
 
             <td><?php echo $row->jenis_terapi; ?></td>
+
+            <td><?php echo $row->ruang; ?></td>
             
           </tr>
           <?php } ?>
